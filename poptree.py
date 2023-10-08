@@ -28,9 +28,10 @@ selected_time_periods = st.multiselect("Time Period:", list(file_name_mapping.ke
 # Load data from selected files into a Pandas DataFrame, skipping the first row
 selected_files = [file_name_mapping[time_period] for time_period in selected_time_periods]
 data = pd.concat([pd.read_csv(file, index_col=0, header=None) for file in selected_files])
-
 # Remove duplicate rows based on data after the first comma
-data = data[~data.iloc[:, 0].duplicated(keep='first')]
+data = data.drop_duplicates(keep='first')
+
+
 
 
 # Check if the selected population exists in the current data
